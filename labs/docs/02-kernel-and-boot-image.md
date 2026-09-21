@@ -104,7 +104,7 @@ Power and console both come over a single mini-USB cable.
 
 - **Jumpers**: set the board to *SD card* boot mode, and set the power-source
   jumper to draw power from USB.
-- Open the serial console with `picocom` (see below).
+- Open the serial console with PuTTY (see below).
 - The same physical port carries both UART0 and UART1, so you may see some
   messages duplicated.
 
@@ -119,17 +119,19 @@ Power on (or press reset after changing settings). You should see:
 At this point you have booted a custom kernel on the board. Every subsequent
 experiment repeats Steps 1-5 with custom hardware and drivers added.
 
-### Using picocom
+### Using PuTTY
 
 ```bash
-picocom -b 115200 /dev/ttyUSB1
+putty -serial /dev/ttyUSB1 -sercfg 115200,8,n,1,N &
 ```
 
 - The board shows up as two USB serial ports; the console is usually
   `/dev/ttyUSB1`. To be sure, run `ls -l /dev/serial/by-id/` with the board
   powered: the console is the one ending in `if01-port0`.
-- `-b 115200` sets the speed; picocom's defaults (8N1) cover the rest.
-- Picocom commands start with `Ctrl-A`. Exit with `Ctrl-A` then `Ctrl-X`.
+- `-sercfg 115200,8,n,1,N` sets 115200 baud, 8 data bits, no parity, 1 stop
+  bit and no flow control. You can also start `putty` with no arguments and set
+  these in the *Serial* connection settings.
+- Close the PuTTY window to release the port.
 - Nothing on screen? Press Enter, or press the board's reset button to see it
   boot from the start.
 - `Permission denied`: your user cannot open the port. On your own machine,

@@ -72,7 +72,7 @@ sudo apt-get install build-essential flex bison libssl-dev libelf-dev cmake git
 sudo apt-get install u-boot-tools
 
 # Serial terminal for the board console
-sudo apt-get install picocom
+sudo apt-get install putty
 # Let your user open the serial port (log out and in afterwards)
 sudo usermod -aG dialout $USER
 ```

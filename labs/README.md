@@ -66,6 +66,6 @@ dtc -I dts -O dtb pynq-z1.dts -o binfiles/pynq-z1.dtb
 # Copy (do not symlink) the kernel in; re-copy after every kernel rebuild.
 cp $KDIR/arch/arm/boot/zImage binfiles/zImage
 mkimage -f boot.its binfiles/image.ub
-# Board console (exit: Ctrl-A Ctrl-X)
-picocom -b 115200 /dev/ttyUSB1
+# Board console (exit: close the window)
+putty -serial /dev/ttyUSB1 -sercfg 115200,8,n,1,N &
 ```
