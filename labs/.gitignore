@@ -1,0 +1,10 @@
+# Build outputs
+binfiles/
+*.o
+*.ko
+*.mod
+*.mod.c
+.*.cmd
+Module.symvers
+modules.order
+squarer/sw/test_squarer

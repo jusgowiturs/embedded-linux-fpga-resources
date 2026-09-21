@@ -16,6 +16,7 @@ vmlinux*
 *.gz
 *.xz
 *.tar
+*.bz2
 
 # Keep the README
 !README.md

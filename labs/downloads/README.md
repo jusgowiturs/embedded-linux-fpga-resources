@@ -4,9 +4,9 @@ This folder holds the things you download and build for the lab: the busybox
 and Linux kernel sources, plus the known-good build configs that ship with it
 (`config-busybox` and `config-linux`).
 
-Before doing this, follow the instructions in the [Lab README](../README.md)
-and run the `setup.sh` script there. The commands below assume the environment
-variables it exports (`DL`, `KDIR`, `BDIR`, `LDIR`, ...) are already set.
+Before doing this, follow [01 - Environment setup](../docs/01-environment-setup.md)
+and run `setup.sh`. The commands below assume the variables it exports (`DL`,
+`KDIR`, `BDIR`, `LDIR`, ...) are set.
 
 ## Required Downloads
 
@@ -16,8 +16,9 @@ Download busybox for creating the initramfs:
 
 ```bash
 cd $DL
-# wget https://busybox.net/downloads/busybox-1_32_0.tar.gz
-wget https://launchpad.net/busybox/main/1.32.0/+download/busybox-1.32.0.tar.bz2
+wget https://busybox.net/downloads/busybox-1.32.0.tar.bz2
+# If busybox.net is down, a mirror:
+# wget https://launchpad.net/busybox/main/1.32.0/+download/busybox-1.32.0.tar.bz2
 tar -xf busybox-1.32.0.tar.bz2
 ```
 
