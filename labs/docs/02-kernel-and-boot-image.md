@@ -41,8 +41,11 @@ rebuilding the kernel:
 # in each module folder, after `make`
 make -C "$KDIR" M="$(pwd)" modules_install INSTALL_MOD_PATH=/tmp/initramfs
 # then rebuild the kernel so the initramfs is repacked into the zImage
-make -j -C $KDIR
+make -j4 -C $KDIR
 ```
+
+`depmod` warns that `modules.order` and `modules.builtin` are missing. That is
+expected here and harmless.
 
 ## Step 2: Build the device tree blob
 
@@ -55,6 +58,9 @@ cd $LDIR
 mkdir -p binfiles
 dtc -I dts -O dtb -o binfiles/pynq-z1.dtb pynq-z1.dts
 ```
+
+`dtc` prints many warnings (`reg_format`, `unit_address_vs_reg`, ...) for this
+file. They are expected; the DTB is still produced.
 
 *Note*: the same DTB works on the Pynq-Z2 - both boards use the same Zynq
 device.
@@ -98,12 +104,7 @@ Power and console both come over a single mini-USB cable.
 
 - **Jumpers**: set the board to *SD card* boot mode, and set the power-source
   jumper to draw power from USB.
-- Open a serial terminal. On Ubuntu use `gtkterm`; on the lab machines use
-  `picocom` (`picocom -b 115200 /dev/ttyUSB1`, exit with `Ctrl-A Ctrl-X`).
-  - Port: `/dev/ttyUSB1` (usual). If that fails, power the board and run
-    `ls -l /dev/serial/by-id/`. The board shows up as two ports; the console
-    is the one ending in `if01`.
-  - Params: `115200 N 1` (speed, no parity, 1 stop bit).
+- Open the serial console with `picocom` (see below).
 - The same physical port carries both UART0 and UART1, so you may see some
   messages duplicated.
 
@@ -117,6 +118,23 @@ Power on (or press reset after changing settings). You should see:
 
 At this point you have booted a custom kernel on the board. Every subsequent
 experiment repeats Steps 1-5 with custom hardware and drivers added.
+
+### Using picocom
+
+```bash
+picocom -b 115200 /dev/ttyUSB1
+```
+
+- The board shows up as two USB serial ports; the console is usually
+  `/dev/ttyUSB1`. To be sure, run `ls -l /dev/serial/by-id/` with the board
+  powered: the console is the one ending in `if01-port0`.
+- `-b 115200` sets the speed; picocom's defaults (8N1) cover the rest.
+- Picocom commands start with `Ctrl-A`. Exit with `Ctrl-A` then `Ctrl-X`.
+- Nothing on screen? Press Enter, or press the board's reset button to see it
+  boot from the start.
+- `Permission denied`: your user cannot open the port. On your own machine,
+  see the `dialout` step in [01](./01-environment-setup.md#required-packages).
+- Only one program can use the port at a time. Close other terminals first.
 
 ---
 

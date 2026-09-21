@@ -59,11 +59,13 @@ $LDIR/initramfs-setup.sh
 make
 make -C "$KDIR" M="$(pwd)" modules_install INSTALL_MOD_PATH=/tmp/initramfs
 # Rebuild the kernel so the initramfs is repacked
-make -j -C $KDIR
+make -j4 -C $KDIR
 # Compile the device tree
 dtc -I dts -O dtb pynq-z1.dts -o binfiles/pynq-z1.dtb
 # Build the boot image (run from $LDIR, where boot.its lives).
 # Copy (do not symlink) the kernel in; re-copy after every kernel rebuild.
 cp $KDIR/arch/arm/boot/zImage binfiles/zImage
 mkimage -f boot.its binfiles/image.ub
+# Board console (exit: Ctrl-A Ctrl-X)
+picocom -b 115200 /dev/ttyUSB1
 ```

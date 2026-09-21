@@ -193,8 +193,8 @@ Boot the board, activate the level shifters (`devmem 0xF8000900 32 0xF`),
 program the bitstream, then load the drivers and run the test:
 
 ```bash
-insmod squarer_mmio.ko
-insmod squarer_dma.ko
+modprobe squarer_mmio
+modprobe squarer_dma
 ls -l /dev/squarer_*           # /dev/squarer_mmio and /dev/squarer_dma
 
 ./test_squarer                 # no argument: N = 1024

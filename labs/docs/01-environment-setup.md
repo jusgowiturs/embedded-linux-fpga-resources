@@ -29,9 +29,9 @@ work). Key facts:
   create a Vivado project.
 - **XDC file**: you map some outputs to the on-board LEDs. The LED pin
   locations are fixed by the board designer, so you cannot choose arbitrary
-  pins. Get the official XDC for the board from the Pynq website (or search
-  online) and uncomment only the pins you actually use. The IO standard for
-  the LEDs is `LVCMOS33` (3.3V CMOS).
+  pins. The Pynq-Z1 XDC is in this repo as [pynq-z1.xdc](../pynq-z1.xdc) (for
+  the Z2, get its XDC from the Pynq website). Use only the pins you need. The
+  IO standard for the LEDs is `LVCMOS33` (3.3V CMOS).
 
 ## System requirements
 
@@ -72,7 +72,9 @@ sudo apt-get install build-essential flex bison libssl-dev libelf-dev cmake git
 sudo apt-get install u-boot-tools
 
 # Serial terminal for the board console
-sudo apt-get install gtkterm
+sudo apt-get install picocom
+# Let your user open the serial port (log out and in afterwards)
+sudo usermod -aG dialout $USER
 ```
 
 ## Repository checkout and environment
@@ -98,6 +100,10 @@ fresh shell:
 | `DL` | the `labs/downloads` folder |
 | `KDIR` | kernel source/build dir (`$DL/linux-6.6`) |
 | `BDIR` | busybox source dir (`$DL/busybox-1.32.0`) |
+
+`setup.sh` only sets up the shell it opens. **In every new terminal, `cd` to
+`labs` and run `./setup.sh` again.** Without it, `make` in the kernel folder
+quietly reconfigures the kernel for your PC instead of the ARM board.
 
 You are welcome to write your own scripts or command sequences instead - the
 variables above are just there to keep the later commands short.
