@@ -52,6 +52,9 @@ need to start from a working card. Flashing the base image is not covered here.
 
 ## Required packages
 
+The lab machines already have everything installed, and no lab step needs
+`sudo`. The list below is for setting up your own Ubuntu machine.
+
 ```bash
 sudo apt-get update
 sudo apt-get install curl

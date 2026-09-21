@@ -24,8 +24,8 @@ tar -xf busybox-1.32.0.tar.bz2
 #### Configure and build busybox
 
 It is important that you do this before trying to compile the kernel since the
-kernel looks for the `/tmp/initramfs` folder and the build will fail without
-that.
+kernel looks for the `/tmp/initramfs` folder and the
+`/tmp/initramfs.devnodes` file, and the build will fail without them.
 
 ```bash
 cd busybox-1.32.0

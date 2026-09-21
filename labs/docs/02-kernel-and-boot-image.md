@@ -28,6 +28,12 @@ created by the helper script in this folder:
 $LDIR/initramfs-setup.sh
 ```
 
+Creating device nodes such as `/dev/console` normally needs root. The script
+avoids this: it writes the nodes to a list file, `/tmp/initramfs.devnodes`,
+and the kernel build adds them to the image when it packs `/tmp/initramfs`
+(both paths are named in `CONFIG_INITRAMFS_SOURCE` in `config-linux`). So no
+step here needs `sudo`.
+
 When you later add kernel modules, install them into the initramfs *before*
 rebuilding the kernel:
 
@@ -92,9 +98,11 @@ Power and console both come over a single mini-USB cable.
 
 - **Jumpers**: set the board to *SD card* boot mode, and set the power-source
   jumper to draw power from USB.
-- Install and configure `gtkterm`:
-  - Port: `/dev/ttyUSB1` (usual). If that fails, run `sudo dmesg` after
-    powering the board and use the port it reports.
+- Open a serial terminal. On Ubuntu use `gtkterm`; on the lab machines use
+  `picocom` (`picocom -b 115200 /dev/ttyUSB1`, exit with `Ctrl-A Ctrl-X`).
+  - Port: `/dev/ttyUSB1` (usual). If that fails, power the board and run
+    `ls -l /dev/serial/by-id/`. The board shows up as two ports; the console
+    is the one ending in `if01`.
   - Params: `115200 N 1` (speed, no parity, 1 stop bit).
 - The same physical port carries both UART0 and UART1, so you may see some
   messages duplicated.
